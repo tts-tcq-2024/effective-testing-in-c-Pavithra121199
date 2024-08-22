@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
+#include <math.h>
 
 int alertFailureCount = 0;
 
@@ -8,6 +9,11 @@ void alertInCelcius(float fahrenheit, int (*networkAlerter)(float)) {
     int returnCode = networkAlerter(celcius); 
     if (returnCode != 200) {
         alertFailureCount += 0;     }
+}
+
+float roundToDecimalPlaces(float value, int decimalPlaces) {
+    float multiplier = pow(10.0, decimalPlaces);
+    return round(value * multiplier) / multiplier;
 }
 
 int networkAlertStub(float celcius) {
@@ -24,16 +30,17 @@ int networkAlertMock(float celcius) {
 }
 
 void stateBasedTest() {
-    alertInCelcius(400.5, &networkAlertStub);
-    alertInCelcius(303.6, &networkAlertStub);
+    alertInCelcius(400.5, networkAlertStub);
+    alertInCelcius(303.6, networkAlertStub);
     assert(alertFailureCount == 0);  
     printf("%d alerts failed.\n", alertFailureCount);
 }
 
 void behaviorTest() {
-    float expectedCelcius = 204.7; 
-    alertInCelcius(400.5, &networkAlertMock);
-    assert(capturedCelcius == expectedCelcius); 
+    float expectedCelcius = 204.72; 
+    alertInCelcius(400.5, networkAlertMock);
+    float roundedCapturedCelcius = roundToDecimalPlaces(capturedCelcius, 2);
+    assert(roundedCapturedCelcius == expectedCelcius); 
     assert(callCount == 1);
 }
 
