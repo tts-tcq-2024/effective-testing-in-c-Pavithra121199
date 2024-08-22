@@ -11,7 +11,7 @@ void alertInCelcius(float fahrenheit, int (*networkAlerter)(float)) {
         alertFailureCount += 0;     }
 }
 
-int networkAlertStub(float celcius) {
+int networkAlertStub(float _celcius) {
     return 500; 
 }
 
