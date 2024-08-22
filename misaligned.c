@@ -2,29 +2,32 @@
 #include <assert.h>
 #include <string.h>
 
-int printColorMap() {
+void printManual(int colorCode, const char* majorColor, const char* minorColor) {
+    printf("%d | %s | %s\n", colorCode, majorColor, minorColor);
+}
+
+int printColorMap(void (*printManual)(int colorCode, const char* majorColor, const char* minorColor)) {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
-    int i = 0, j = 0;
-    for(i = 0; i < 5; i++) {
-        for(j = 0; j < 5; j++) {
-            printf("%d | %s | %s\n", i * 5 + j, majorColor[i], minorColor[i]);
+    int i, j;
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 5; j++) {
+            printManual(i * 5 + j, majorColor[i], minorColor[i]);
         }
     }
-    return i * j;
+    return i * j; 
 }
 
-char capturedOutput[1024];
-char* captureOutput() {
-    capturedOutput[0] = '\0';
-    setvbuf(stdout, capturedOutput, _IOFBF, sizeof(capturedOutput));
-    return capturedOutput;
+
+char capturedOutput[1024] = {0};
+void printColorCodeManualMock(int colorCode, const char* majorColor, const char* minorColor) {
+    char buffer[128];
+    sprintf(buffer, "%d | %s | %s\n", colorCode, majorColor, minorColor);
+    strcat(capturedOutput, buffer);  
 }
 
-int main() {
-    captureOutput();
-    int result = printColorMap(); 
-    // Test case to check if the correct color mapping is printed
+
+void interactionTesting() {
     const char* expectedOutput =
         "0 | White | Blue\n"
         "1 | White | Orange\n"
@@ -51,8 +54,12 @@ int main() {
         "22 | Violet | Green\n"
         "23 | Violet | Brown\n"
         "24 | Violet | Slate\n"; 
-    assert(result == 25);
-    assert(strcmp(capturedOutput, expectedOutput) == 0);
-    printf("All is well (maybe!)\n");
+    int result = printColorMap(&printColorCodeManualMock);
+    assert(result == 25);         //value test
+    assert(strcmp(capturedOutput, expectedOutput) == 0);    //behavior test
+
+int main() {
+    interactionTesting();
+    printf("All tests passed!\n");
     return 0;
 }
