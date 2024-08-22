@@ -25,7 +25,6 @@ int callCount = 0;
 float capturedCelcius;
 int networkAlertMock(float celcius) {    
     capturedCelcius = celcius;
-    float roundedCapturedCelcius = roundToDecimalPlaces(capturedCelcius, 2);
     ++callCount;
     return 500; 
 }
@@ -39,7 +38,7 @@ void stateBasedTest() {
 
 void behaviorTest() {
     float expectedCelcius = 204.72; 
-    callCount = 0; 
+    float roundedCapturedCelcius = roundToDecimalPlaces(capturedCelcius, 2);
     alertInCelcius(400.5, networkAlertMock);
     assert(roundedCapturedCelcius == expectedCelcius); 
     assert(callCount == 1);
