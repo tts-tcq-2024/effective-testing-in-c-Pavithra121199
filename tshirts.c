@@ -14,12 +14,30 @@ char size(int cms) {
     return sizeName;
 }
 
+void testSmallSize() {
+    assert(size(37) == 'S');  
+}
+
+void testMediumSize() {
+    assert(size(39) == 'M');  
+    assert(size(41) == 'M');  
+}
+
+void testLargeSize() {
+    assert(size(43) == 'L');      
+}
+
+void testBoundaryConditions() {
+    assert(size(38) == 'S');  
+    assert(size(42) == 'M'); 
+}
+
 int main() {
-    assert(size(37) == 'S');
-    assert(size(38) == 'S');
-    assert(size(40) == 'M');
-    assert(size(42) == 'M');
-    assert(size(43) == 'L');
+    testSmallSize();          
+    testMediumSize();        
+    testLargeSize();          
+    testBoundaryConditions(); 
     printf("All is well (maybe!)\n");
     return 0;
 }
+
