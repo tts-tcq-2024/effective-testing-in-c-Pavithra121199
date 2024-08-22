@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <assert.h>
 
@@ -14,7 +15,7 @@ int networkAlertStub(float celsius) {
     return 500; 
 }
 
-float capturedCelsius;
+float capturedCelcius;
 int callCount = 0;
 
 int networkAlertMock(float celcius) {
@@ -34,8 +35,9 @@ void behaviorTest() {
     float expectedCelcius = 204.7222; 
     callCount = 0; 
     alertInCelcius(400.5, networkAlertMock);
-    assert(capturedCelsius == expectedCelsius); 
+    assert(capturedCelcius == expectedCelcius); 
     assert(callCount == 1);
+}
 
 int main() {
     stateBasedTest();
