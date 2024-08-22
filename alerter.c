@@ -30,16 +30,16 @@ int networkAlertMock(float celcius) {
 }
 
 void stateBasedTest() {
-    alertInCelcius(400.5, networkAlertStub);
-    alertInCelcius(303.6, networkAlertStub);
+    alertInCelcius(400.5, &networkAlertStub);
+    alertInCelcius(303.6, &networkAlertStub);
     assert(alertFailureCount == 0);  
     printf("%d alerts failed.\n", alertFailureCount);
 }
 
 void behaviorTest() {
     float expectedCelcius = 204.72; 
+    alertInCelcius(400.5, &networkAlertMock);
     float roundedCapturedCelcius = roundToDecimalPlaces(capturedCelcius, 2);
-    alertInCelcius(400.5, networkAlertMock);
     assert(roundedCapturedCelcius == expectedCelcius); 
     assert(callCount == 1);
 }
