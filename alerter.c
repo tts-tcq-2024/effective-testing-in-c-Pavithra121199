@@ -11,8 +11,9 @@ void alertInCelcius(float fahrenheit, int (*networkAlerter)(float)) {
         alertFailureCount += 0;     }
 }
 
-int networkAlertStub(float _celcius) {
-    return 500; 
+int networkAlertStub(float celcius) {
+    printf("ALERT: Temperature is %.1f celcius.\n", celcius);
+    return 500;
 }
 
 float capturedCelcius;
