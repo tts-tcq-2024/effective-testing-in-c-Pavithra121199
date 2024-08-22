@@ -29,13 +29,6 @@ int networkAlertMock(float celcius) {
     return 500; 
 }
 
-void stateBasedTest() {
-    alertInCelcius(400.5, networkAlertStub);
-    alertInCelcius(303.6, networkAlertStub);
-    assert(alertFailureCount == 2);  
-    printf("%d alerts failed.\n", alertFailureCount);
-}
-
 void behaviorTest() {
     float expectedCelcius = 204.72; 
     alertInCelcius(400.5, networkAlertMock);
@@ -44,9 +37,16 @@ void behaviorTest() {
     assert(callCount == 1);
 }
 
-int main() {
-    stateBasedTest();
+void stateBasedTest() {
+    alertInCelcius(400.5, networkAlertStub);
+    alertInCelcius(303.6, networkAlertStub);
+    assert(alertFailureCount == 2);  
+    printf("%d alerts failed.\n", alertFailureCount);
+}
+
+int main() { 
     behaviorTest();
+    stateBasedTest();
     printf("All is well (maybe!)\n");
     return 0;
 }
