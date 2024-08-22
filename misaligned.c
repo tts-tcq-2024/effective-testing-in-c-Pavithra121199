@@ -18,14 +18,12 @@ int printColorMap(void (*printManual)(int colorCode, const char* majorColor, con
     return i * j; 
 }
 
-
 char capturedOutput[1024];
 void printColorCodeManualMock(int colorCode, const char* majorColor, const char* minorColor) {
     char buffer[128];
     sprintf(buffer, "%d | %s | %s\n", colorCode, majorColor, minorColor);
     strcat(capturedOutput, buffer);  
 }
-
 
 void interactionTesting() {
     const char* expectedOutput =
@@ -56,9 +54,7 @@ void interactionTesting() {
         "24 | Violet | Slate\n"; 
     int result = printColorMap(&printColorCodeManualMock);
     assert(result == 25);         //value test
-    printf("Captured Output:\n%s", capturedOutput);
-    printf("Expected Output:\n%s", expectedOutput);
-//    assert(strcmp(capturedOutput, expectedOutput) == 0);    //behavior test
+    assert(strcmp(capturedOutput, expectedOutput) == 0);    //behavior test
 }
 int main() {
     interactionTesting();
