@@ -57,7 +57,7 @@ void interactionTesting() {
     int result = printColorMap(&printColorCodeManualMock);
     assert(result == 25);         //value test
     assert(strcmp(capturedOutput, expectedOutput) == 0);    //behavior test
-
+}
 int main() {
     interactionTesting();
     printf("All tests passed!\n");
